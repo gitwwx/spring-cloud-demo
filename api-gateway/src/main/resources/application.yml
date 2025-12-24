@@ -1,0 +1,31 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # 开启从注册中心动态创建路由功能
+          lower-case-service-id: true  # 服务名小写
+      routes:
+        - id: service-consumer
+          uri: lb://service-consumer
+          predicates:
+            - Path=/consumer/**
+          filters:
+            - StripPrefix=0 # 不移除前缀/consumer
+
+        - id: service-provider
+          uri: lb://service-provider
+          predicates:
+            - Path=/provider/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin123@localhost:8761/eureka/

@@ -1,0 +1,23 @@
+server:
+  port: 8899
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native  # 关键！必须显式激活native profile
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - file:/config-files/
+            - classpath:/config-files/  # 也可以放在classpath下
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin123@localhost:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: localhost

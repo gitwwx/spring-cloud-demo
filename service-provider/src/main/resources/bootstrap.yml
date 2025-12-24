@@ -1,0 +1,9 @@
+spring:
+  config:
+    import: "optional:configserver:http://localhost:8899"  # 替换为你的Config Server地址
+  cloud:
+    config:
+      name: service-provider  # 对应配置文件前缀
+      profile: dev           # 环境
+      uri: http://localhost:8899  # 配置中心地址
+      fail-fast: true        # 启动时如无法连接配置中心则快速失败
